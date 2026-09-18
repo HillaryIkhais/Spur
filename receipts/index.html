@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CLEAR — Judge Verification</title>
+<style>body{font-family:ui-monospace,monospace;max-width:960px;margin:2rem auto;padding:0 1rem;color:#111}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid #999;padding:6px 8px;text-align:left}
+th{background:#eee}.ok{color:#060}h1{font-size:22px}code{background:#f4f4f4;padding:1px 4px}</style>
+</head><body>
+<h1>CLEAR — the execution contract for autonomous work</h1>
+<p><strong>Invariant:</strong> a delegated job can become narrower, never weaker. Child ⊆ parent.</p>
+<h2>Job #42 receipt (computed live 2026-09-10T10:45:52.000Z)</h2>
+<table>
+<tr><td><b>Buyer</b></td><td>Agent A (#1)</td></tr>
+<tr><td><b>Provider</b></td><td>Agent B (#2) via A → B → C</td></tr>
+<tr><td><b>Obligation hash</b></td><td><code>0x63f58af62f9481cd590bb1f35d7c7bcdeb9a83bae70619439d7e21476d25885a</code></td></tr>
+<tr><td><b>Honest 100/100</b></td><td>RESULT satisfies JOB → SETTLED $0.08</td></tr>
+<tr><td><b>Fabricated result</b></td><td>PROOF ≠ OBLIGATION: schema: record[0] invalid (pair=USD/NGN rate=-999 ts=1789037152 source=); provenance: 100 missing provenance → REJECTED</td></tr>
+<tr><td><b>Binding (same job)</b></td><td>result bound to this obligation</td></tr>
+<tr><td><b>Binding (cross-job)</b></td><td>cross-job result: bound to JOB #42, presented against JOB #43</td></tr>
+<tr><td><b>Legit delegation</b></td><td>child ⊆ parent — allowed</td></tr>
+</table>
+<h2>Attack lab — 12/12 neutralized</h2>
+<table><tr><th>ID</th><th>Attack</th><th>Outcome</th><th>Proof</th><th>Enforced in</th></tr>
+<tr><td>A01</td><td>Requirement mutation / incomplete 73/100</td><td>REJECTED</td><td>computed live: count 73/100</td><td>verify.ts</td></tr>
+<tr><td>A02</td><td>Delegation weakening (freshness/sources/schema/methods)</td><td>4/4 REJECTED</td><td>computed live: freshness weakened: child allows 900s &gt; parent 120s</td><td>obligation.ts</td></tr>
+<tr><td>A03</td><td>Budget escalation ($1.50 child of $1.00)</td><td>REVERT WeakenedDelegation</td><td>forge: test_delegation_cannot_weaken_amount + fuzz I1/I2</td><td>ClearObligations.sol:delegate</td></tr>
+<tr><td>A04</td><td>Deadline extension (T+1h child)</td><td>INEXPRESSIBLE</td><td>forge: fuzz I3 deadlineMonotonic ×256</td><td>ClearObligations.sol:delegate</td></tr>
+<tr><td>A05</td><td>Self-verification</td><td>REVERT OnlyVerifier</td><td>forge: fuzz I4 ×256 callers</td><td>ClearObligations.sol:resolve</td></tr>
+<tr><td>A06</td><td>Evidence substitution (poisoned, no provenance)</td><td>REJECTED</td><td>computed live: PROOF ≠ OBLIGATION: schema: record[0] invalid (pair=USD/NGN rate=-999 ts=1789037152 source=); provenance: 100 missing provenance</td><td>obligation.ts</td></tr>
+<tr><td>A07</td><td>Replay / double settlement</td><td>REVERT (status machine)</td><td>forge: fuzz I5 ×256 flag combos</td><td>ClearObligations.sol:resolve</td></tr>
+<tr><td>A08</td><td>Cross-job result (A proof vs B)</td><td>REJECTED (binding)</td><td>computed live: cross-job result: bound to JOB #42, presented against JOB #43</td><td>evidence.ts</td></tr>
+<tr><td>A09</td><td>Stale evidence (15min vs <120s)</td><td>REJECTED</td><td>computed live: freshness</td><td>verify.ts</td></tr>
+<tr><td>A10</td><td>Expired job</td><td>EXPIRED_REFUNDED</td><td>forge: test_attack7_timeout_refunds</td><td>ClearObligations.sol:expire</td></tr>
+<tr><td>A11</td><td>Malicious sub-agent (method escape)</td><td>REJECTED</td><td>computed live: narrowing</td><td>obligation.ts + delegate</td></tr>
+<tr><td>A12</td><td>Verifier manipulation</td><td>REVERT OnlyVerifier</td><td>forge: fuzz I4</td><td>ClearObligations.sol:resolve</td></tr>
+</table>
+<h2>Invariants I1–I8 (1,280 fuzz runs, 0 violations)</h2>
+<table><tr><th>ID</th><th>Invariant</th><th>Enforcement</th><th>Status</th></tr>
+<tr><td>I1</td><td>child.requirements ⊆ parent.requirements</td><td>on-chain inheritance + fuzz ×256</td><td>0 violations</td></tr>
+<tr><td>I2</td><td>child.budget ≤ parent.remainingBudget</td><td>revert WeakenedDelegation + fuzz ×256</td><td>0 violations</td></tr>
+<tr><td>I3</td><td>child.expiry ≤ parent.expiry</td><td>verbatim inheritance + fuzz ×256</td><td>0 violations</td></tr>
+<tr><td>I4</td><td>provider ≠ verifier</td><td>onlyVerifier + fuzz ×256 callers</td><td>0 violations</td></tr>
+<tr><td>I5</td><td>settlement_count(job) ≤ 1</td><td>status machine + fuzz ×256</td><td>0 violations</td></tr>
+<tr><td>I6</td><td>requirementsHash immutable after funding</td><td>no mutation path + fuzz</td><td>0 violations</td></tr>
+<tr><td>I7</td><td>result bound to (job, obligation, evidence)</td><td>evidence.ts bindResult, live</td><td>verified on this page</td></tr>
+<tr><td>I8</td><td>no cross-job replay</td><td>evidence.ts verifyBinding, live</td><td>verified on this page</td></tr>
+</table>
+<h2>Deployment</h2>
+<pre>pending mainnet deploy — see README Key ceremony</pre>
+<p>Reproduce everything: <code>npm run attack-lab && forge test -vvv && npm run demo:v2</code>.
+Celo primitives: x402 (pay-per-request) · ERC-8004 (agent IDs + work history) · USDT settlement · mainnet.</p>
+</body></html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MELD — Judge Verification</title>
+<style>body{font-family:ui-monospace,monospace;max-width:960px;margin:2rem auto;padding:0 1rem;color:#111}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid #999;padding:6px 8px;text-align:left}
+th{background:#eee}.ok{color:#060}.bad{color:#a00}h1{font-size:22px}code{background:#f4f4f4;padding:1px 4px}</style>
+</head><body>
+<h1>MELD — x402 payment adapter for asset mismatch</h1>
+<p><strong>Invariant:</strong> OUTPUT_AFTER_SWAP ≥ EXACT_X402_AMOUNT</p>
+
+<h2>Happy path — USDC treasury, wBRL merchant (2026-09-11T14:36:55.000Z)</h2>
+<table>
+<tr><td><b>Outcome</b></td><td>PAID</td></tr>
+<tr><td><b>Route</b></td><td>USDC → wBRL</td></tr>
+<tr><td><b>Input</b></td><td>0.01626 USDC</td></tr>
+<tr><td><b>Output</b></td><td>0.08 wBRL</td></tr>
+<tr><td><b>Swap tx</b></td><td>swap-USDC-1789137415119</td></tr>
+<tr><td><b>x402 tx</b></td><td>pay-1789137415119</td></tr>
+</table>
+<table><tr><th>Check</th><th>Result</th><th>Detail</th></tr>
+<tr><td>settleAmount</td><td>✓</td><td>got 0.08 ≥ need 0.08 (0 bps over)</td></tr>
+<tr><td>slippage</td><td>✓</td><td>actual 0.08 vs min 0.0796 (50 bps tolerance)</td></tr>
+<tr><td>totalCost</td><td>✓</td><td>total cost $0.016260 (limit $1.0000)</td></tr>
+<tr><td>routeHops</td><td>✓</td><td>1 hops (limit 2)</td></tr>
+<tr><td>recipient</td><td>✓</td><td>payTo 0xM3rch4nt…</td></tr>
+<tr><td>network</td><td>✓</td><td>network celo</td></tr>
+<tr><td>expiry</td><td>✓</td><td>120s remaining (limit 120s)</td></tr>
+<tr><td>treasury</td><td>✓</td><td>balance 12.41 USDC (need 0.01626)</td></tr>
+<tr><td>priceImpact</td><td>✓</td><td>price impact 0.0000% (limit 0.50%)</td></tr>
+</table>
+
+<h2>Deteriorated fill — 0.0771 wBRL vs required 0.08</h2>
+<table>
+<tr><td><b>Outcome</b></td><td>BLOCKED</td></tr>
+<tr><td><b>Reason</b></td><td>route USDC → wBRL found but policy failed: settleAmount, slippage, priceImpact</td></tr>
+</table>
+<table><tr><th>Check</th><th>Result</th><th>Detail</th></tr>
+<tr><td>settleAmount</td><td>✗</td><td>SHORT 0.002900 wBRL (got 0.0771, need 0.08)</td></tr>
+<tr><td>slippage</td><td>✗</td><td>actual 0.0771 vs min 0.0796 (50 bps tolerance)</td></tr>
+<tr><td>totalCost</td><td>✓</td><td>total cost $0.016260 (limit $1.0000)</td></tr>
+<tr><td>routeHops</td><td>✓</td><td>1 hops (limit 2)</td></tr>
+<tr><td>recipient</td><td>✓</td><td>payTo 0xM3rch4nt…</td></tr>
+<tr><td>network</td><td>✓</td><td>network celo</td></tr>
+<tr><td>expiry</td><td>✓</td><td>120s remaining (limit 120s)</td></tr>
+<tr><td>treasury</td><td>✓</td><td>balance 12.41 USDC (need 0.01626)</td></tr>
+<tr><td>priceImpact</td><td>✗</td><td>price impact 3.6250% (limit 0.50%)</td></tr>
+</table>
+
+<h2>Attack lab — 7/7</h2>
+<p>Run <code>npm run pb:attack</code> — every scenario executes against the real enforcer.</p>
+<h2>Reproduce</h2>
+<p><code>npm run pb:demo</code> · <code>npm run pb:attack</code> · x402 on Celo mainnet · wARS/wBRL/wCOP stablecoins</p>
+</body></html>

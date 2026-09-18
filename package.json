@@ -1,0 +1,37 @@
+{
+  "name": "spur-protocol",
+  "version": "0.1.0",
+  "description": "SPUR — machine-native economic obligations for autonomous agents on Celo.",
+  "type": "module",
+  "scripts": {
+    "demo": "tsx demo/killer-demo.ts",
+    "demo:v2": "tsx demo/delegation-demo.ts",
+    "attack-lab": "tsx demo/attack-lab.ts",
+    "server": "tsx server/x402-server.ts",
+    "bot": "tsx bot/telegram.ts",
+    "smoke:bot": "tsx bot/smoke.ts",
+    "judge-page": "tsx demo/judge-page.ts",
+    "deploy:celo": "forge script script/Deploy.s.sol --rpc-url celo --broadcast",
+    "verify": "tsx verifier/verify.ts",
+    "test:contracts": "forge test -vvv",
+    "pb:demo": "tsx demo/meld-demo.ts",
+    "pb:attack": "tsx demo/meld-attack-lab.ts",
+    "pb:judge": "tsx demo/meld-judge-page.ts",
+    "pb:live": "tsx demo/real-celo-demo.ts",
+    "pb:commerce": "tsx demo/cross-border-commerce.ts",
+    "spur-proof": "tsx scripts/spur-proof.ts",
+    "spur-api": "tsx scripts/spur-api.ts",
+    "spur-deploy:mainnet": "tsx scripts/spur-deploy-mainnet.ts",
+    "ui": "node ui/server.cjs"
+  },
+  "dependencies": {
+    "@celo/attribution-tags": "^0.3.0",
+    "express": "^5.2.1",
+    "viem": "^2.33.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
