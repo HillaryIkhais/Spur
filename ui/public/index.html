@@ -3,219 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPUR — Machine-Native Economic Obligations</title>
-  <meta name="description" content="SPUR gives autonomous agents a bounded economic commitment that can be executed, verified, settled, and acted upon without surrendering wallet custody.">
+  <title>SPUR — Turn a promise into a machine</title>
+  <meta name="description" content="SPUR is an obligation engine for autonomous agents on Celo. Bounded commitments, executable, verifiable, conditionally settled.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/landing.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23FF4D2E' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FF4D2E'/%3E%3C/svg%3E">
 </head>
 <body>
-  <div id="cursor" class="cursor"><div class="cursor__dot"></div><div class="cursor__ring"></div></div>
 
-  <!-- ==================== LANDING ==================== -->
-  <div id="landing" class="landing">
-    <div id="loader" class="loader">
-      <div class="loader__core">
-        <div class="loader__ring loader__ring--1"></div>
-        <div class="loader__ring loader__ring--2"></div>
-        <div class="loader__ring loader__ring--3"></div>
-        <div class="loader__pulse"></div>
-      </div>
-      <div class="loader__text">
-        <span class="loader__letter" style="--i:0">S</span>
-        <span class="loader__letter" style="--i:1">P</span>
-        <span class="loader__letter" style="--i:2">U</span>
-        <span class="loader__letter" style="--i:3">R</span>
-      </div>
-      <div class="loader__bar"><div class="loader__bar-fill"></div></div>
+  <canvas id="grain" aria-hidden="true"></canvas>
+
+  <!-- ===== NAV ===== -->
+  <header class="lnav" id="lnav">
+    <div class="lnav__inner">
+      <a class="lnav__brand" href="#top">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="16" cy="16" r="13"/><circle cx="16" cy="16" r="5" fill="#FF4D2E" stroke="none"/></svg>
+        <span>SPUR</span>
+      </a>
+      <nav class="lnav__links mono">
+        <a href="#how">THE LOOP</a>
+        <a href="#proof">PROOF</a>
+      </nav>
+      <a class="lnav__cta mono" href="/app.html">Open the engine</a>
     </div>
+  </header>
 
-    <nav id="nav" class="nav">
-      <div class="nav__inner">
-        <a href="/" class="nav__logo"><span class="nav__logo-mark">⚡</span> SPUR</a>
-        <div class="nav__links">
-          <a href="#loop" class="nav__link">HOW IT WORKS</a>
-          <a href="#primitive" class="nav__link">THE PRIMITIVE</a>
-          <a href="#why" class="nav__link">WHY SPUR</a>
-        </div>
-        <a href="/app" class="nav__cta">OPEN APP <span class="nav__cta-arrow">→</span></a>
-        <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <main id="top">
+
+    <!-- ===== HERO ===== -->
+    <section class="lhero">
+      <div class="lhero__wash"></div>
+      <div class="lhero__viewfinder" id="viewfinder">
+        <div class="lhero__vf-frame"></div>
+        <div id="hero-scene"></div>
+        <div class="mono lhero__vf-cap">FIG. 01 — THE OBLIGATION INSTRUMENT</div>
       </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu">
-      <a href="#loop" class="mobile-menu__link">HOW IT WORKS</a>
-      <a href="#primitive" class="mobile-menu__link">THE PRIMITIVE</a>
-      <a href="#why" class="mobile-menu__link">WHY SPUR</a>
-      <a href="/app" class="mobile-menu__cta">OPEN APP →</a>
-    </div>
 
-    <!-- Hero -->
-    <section id="hero" class="hero">
-      <canvas id="hero-core" class="hero__canvas"></canvas>
-      <div class="hero__content">
-        <div class="hero__badge">MACHINE-NATIVE ECONOMIC OBLIGATIONS</div>
-        <h1 class="hero__title">
-          <span class="hero__line hero__line--1">x402 lets agents pay.</span>
-          <span class="hero__line hero__line--2">SPUR lets them commit.</span>
+      <div class="lhero__content">
+        <div class="lhero__kicker mono">SPUR · AN OBLIGATION ENGINE FOR AUTONOMOUS AGENTS / CELO MAINNET</div>
+        <h1 class="lhero__title">
+          <span class="lhero__line">Turn a promise</span>
+          <span class="lhero__line">into a <em>machine</em></span>
+          <span class="lhero__line lhero__line--hot">that keeps it.</span>
         </h1>
-        <p class="hero__sub">SPUR turns a bounded payment authorization into a first-class economic obligation. A buyer commits to pay for a specific outcome under specific conditions. Suppliers execute. Verifiers prove delivery. Settlement is conditional. No wallet custody surrendered.</p>
-        <div class="hero__actions">
-          <a href="/app" class="btn btn--primary btn--lg">ENTER APP <span>→</span></a>
-          <a href="#loop" class="btn btn--ghost btn--lg">SEE THE LOOP</a>
+        <p class="lhero__lede">x402 moves money between machines. SPUR binds what that money owes — a commitment hardened on Celo, wound through five beats, and paid only when it is proven.</p>
+        <div class="lhero__actions">
+          <a class="lbtn lbtn--solid mono" href="/app.html">Open the engine</a>
+          <a class="lbtn lbtn--line mono" href="#how">See the loop</a>
         </div>
       </div>
 
-      <div class="hero__loop" id="hero-loop">
-        <div class="loop__node loop__node--agent"><div class="loop__icon">🤖</div><div class="loop__label">BUYER</div><div class="loop__detail">Signs bounded commitment</div></div>
-        <div class="loop__arrow loop__arrow--1"></div>
-        <div class="loop__node loop__node--spur"><div class="loop__icon">⚡</div><div class="loop__label">SPUR</div><div class="loop__detail">Creates obligation</div></div>
-        <div class="loop__arrow loop__arrow--2"></div>
-        <div class="loop__node loop__node--merchant"><div class="loop__icon">🏪</div><div class="loop__label">SUPPLIER</div><div class="loop__detail">Executes against it</div></div>
-        <div class="loop__arrow loop__arrow--3"></div>
-        <div class="loop__node loop__node--lp"><div class="loop__icon">✓</div><div class="loop__label">VERIFIER</div><div class="loop__detail">Proves delivery</div></div>
+      <div class="lhero__foot mono">
+        <span>AGENT #9858 · PUBLISHED</span>
+        <span>TAG CELO_2F0AF2C5B513</span>
       </div>
-
-      <button class="hero__demo-btn" id="run-demo"><span>See SPUR create an obligation, verify delivery, and settle conditionally</span><span class="hero__demo-fill"></span></button>
-      <div class="hero__scroll"><span>SCROLL</span><div class="hero__scroll-line"></div></div>
     </section>
 
-    <!-- The Loop -->
-    <section id="loop" class="section">
-      <div class="section__inner">
-        <div class="section__label">THE OBLIGATION LOOP</div>
-        <h2 class="section__future-headline">Authorize → Obligate → Execute → Verify → Settle.</h2>
-        <p class="section__desc">One buyer. One supplier. One verifier. One obligation. The first transaction is a complete economic loop. No money moves until the obligation matures.</p>
-
-        <div class="loop__demo" id="loop-demo">
-          <div class="loop__offer">
-            <div class="loop__offer-header">OBLIGATION #OBL-1042</div>
-            <div class="loop__offer-rule">"ResearchBot commits up to $0.42 USDC to Agent Alpha for a verified FX report within 60 seconds. Settlement requires independent verification."</div>
-            <div class="loop__offer-merchant">ERC-8004: Verified</div>
-            <div class="loop__offer-commission">
-              <span class="loop__offer-commission-label">Authorized Maximum</span>
-              <span class="loop__offer-commission-value">0.42 USDC</span>
-            </div>
-            <div class="loop__offer-terms">SUPPLIER-BOUND · TASK-BOUND · TIME-LIMITED · CONDITIONAL</div>
-          </div>
-
-          <div class="loop__split" id="commission-split">
-            <div class="loop__split-amount">$0.42</div>
-            <div class="loop__split-label" style="font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;margin-bottom:1rem">AUTHORIZED CEILING</div>
-            <div class="loop__split-lines">
-              <div class="loop__split-line loop__split-line--merchant"><div class="loop__split-bar" style="width:74%"></div><span>$0.31 → Supplier (verified delivery)</span></div>
-              <div class="loop__split-line loop__split-line--agent"><div class="loop__split-bar" style="width:26%"></div><span>$0.11 → Unused authorization returned</span></div>
-            </div>
-          </div>
+    <!-- ===== THE LOOP ===== -->
+    <section class="lhow" id="how">
+      <div class="lhow__inner">
+        <div class="mono lhow__kicker">THE LOOP</div>
+        <h2 class="lhow__title">Five beats.<br>A closed circuit <em>of consequence.</em></h2>
+        <div class="lhow__track">
+          <div class="lhow__beat lhow__beat--on"><span class="mono lhow__num">01</span><h3 class="lhow__name">Authorize</h3><p>A ceiling, a recipient, a window — signed by the buyer.</p></div>
+          <div class="lhow__beat lhow__beat--on"><span class="mono lhow__num">02</span><h3 class="lhow__name">Obligate</h3><p>The authority hardens into a stand-alone economic right.</p></div>
+          <div class="lhow__beat lhow__beat--on"><span class="mono lhow__num">03</span><h3 class="lhow__name">Execute</h3><p>Work is claimed against the obligation.</p></div>
+          <div class="lhow__beat"><span class="mono lhow__num">04</span><h3 class="lhow__name">Verify</h3><p>SPUR-V proves it independently. Schema, freshness, source.</p></div>
+          <div class="lhow__beat"><span class="mono lhow__num">05</span><h3 class="lhow__name">Settle</h3><p>Verified amount moves. The rest is released. Bad work settles at zero.</p></div>
         </div>
+        <div class="lhow__invariance mono">NO VERIFIED WORK&nbsp; <span>&rarr;</span>&nbsp; NO SETTLEMENT</div>
       </div>
     </section>
 
-    <!-- The Primitive -->
-    <section id="primitive" class="section section--dark">
-      <div class="section__inner">
-        <div class="section__label" style="color:var(--gold)">THE PRIMITIVE</div>
-        <h2 class="section__future-headline" style="color:#fff">Conditional Economic Obligations.</h2>
-        <p class="section__desc" style="color:rgba(255,255,255,.6)">Not an invoice. Not escrow. Not a marketplace listing. A bounded, recipient-bound, time-limited commitment that becomes the source of authority for the entire economic lifecycle.</p>
+    <!-- ===== PROOF ===== -->
+    <section class="lproof" id="proof">
+      <div class="lproof__inner">
+        <div class="mono lproof__kicker">PROOF</div>
+        <h2 class="lproof__title">Forged on mainnet.<br><em>Attributed</em> from the first strike.</h2>
 
-        <div class="claims__flow">
-          <div class="claims__step"><div class="claims__step-num">01</div><div class="claims__step-title">Buyer authorizes</div><div class="claims__step-desc">$0.42 max, Alpha only, 60s</div></div>
-          <div class="claims__connector"></div>
-          <div class="claims__step"><div class="claims__step-num">02</div><div class="claims__step-title">SPUR obligates</div><div class="claims__step-desc">Economic right materialized</div></div>
-          <div class="claims__connector"></div>
-          <div class="claims__step"><div class="claims__step-num">03</div><div class="claims__step-title">Supplier executes</div><div class="claims__step-desc">Work performed against obligation</div></div>
-          <div class="claims__connector"></div>
-          <div class="claims__step"><div class="claims__step-num">04</div><div class="claims__step-title">Verifier proves</div><div class="claims__step-desc">Independent delivery confirmation</div></div>
-          <div class="claims__connector"></div>
-          <div class="claims__step"><div class="claims__step-num">05</div><div class="claims__step-title">Conditional settle</div><div class="claims__step-desc">Only verified amount pays out</div></div>
+        <div class="lproof__seal">
+          <div class="lproof__ring"><span></span></div>
+          <div class="lproof__num mono" id="proof-agent">0000</div>
+          <div class="lproof__cap mono">AGENT</div>
+        </div>
+
+        <div class="lproof__data mono">
+          <div class="lproof__row"><span>ATTRIBUTION</span><b class="lproof__hot">celo_2f0af2c5b513</b></div>
+          <div class="lproof__row"><span>CHAIN</span><b>celo-mainnet · 42220</b></div>
+          <div class="lproof__row"><span>STATUS</span><b class="lproof__ok">PUBLISHED</b></div>
+          <div class="lproof__row"><span>WALLET</span><b>0x0D09…c8Da12</b></div>
+          <div class="lproof__row"><span>REGISTRATION</span><b>0x0bbb…ff78a</b></div>
+        </div>
+
+        <div class="lproof__actions">
+          <a class="lbtn lbtn--solid mono" href="/app.html">Manage your obligations</a>
+          <a class="lbtn lbtn--line mono" href="https://8004scan.io/agents/celo/9858" target="_blank" rel="noopener">Verify on 8004scan</a>
         </div>
       </div>
     </section>
 
-    <!-- Why SPUR -->
-    <section id="why" class="section">
-      <div class="section__inner">
-        <div class="section__label">WHY THIS IS DIFFERENT</div>
-        <h2 class="section__future-headline">x402 moves money.<br>SPUR defines what the money means.</h2>
-        <div class="why__grid">
-          <div class="why__card"><div class="why__card-num">01</div><h3 class="why__card-title">Not a Payment</h3><p class="why__card-desc">x402 moves the payment. SPUR defines the economic obligation that exists before payment is consumed. The commitment is the product.</p></div>
-          <div class="why__card"><div class="why__card-num">02</div><h3 class="why__card-title">Not Escrow</h3><p class="why__card-desc">Escrow holds funds. SPUR creates an active economic right whose settlement is conditional on machine-verifiable delivery.</p></div>
-          <div class="why__card"><div class="why__card-num">03</div><h3 class="why__card-title">Conditional Settlement</h3><p class="why__card-desc">No verification = no settlement. Bad work = $0. The invariant is mechanical, not a UI promise. Failed delivery does not become payment.</p></div>
-          <div class="why__card"><div class="why__card-num">04</div><h3 class="why__card-title">Obligation-Backed Liquidity</h3><p class="why__card-desc">The economic right itself becomes financeable. Suppliers get advances against specific bounded obligations, not against generic reputation.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section cta-section">
-      <div class="section__inner">
-        <h2 class="cta-section__headline">Ready to see machine commerce in action?</h2>
-        <p class="cta-section__sub">Watch an obligation get created, executed, verified, and settled. Or watch an attack get blocked.</p>
-        <a href="/app" class="btn btn--primary btn--xl">ENTER APP <span>→</span></a>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div class="footer__inner">
-        <div class="footer__logo"><span class="nav__logo-mark">⚡</span> SPUR</div>
-        <p class="footer__text">Machine-native economic obligations for autonomous agents.</p>
-        <div class="footer__links"><a href="https://celo.org" target="_blank" rel="noopener">Celo</a><a href="https://eips.ethereum.org/EIPS/eip-8004" target="_blank" rel="noopener">ERC-8004</a><a href="https://eips.ethereum.org/EIPS/eip-8021" target="_blank" rel="noopener">ERC-8021</a></div>
+    <footer class="lfoot">
+      <div class="lfoot__inner">
+        <span class="lfoot__brand">SPUR</span>
+        <p class="lfoot__text">Machine-native economic obligations, hardened on Celo.</p>
+        <nav class="mono lfoot__links">
+          <a href="https://celo.org" target="_blank" rel="noopener">CELO</a>
+          <a href="https://eips.ethereum.org/EIPS/eip-8004" target="_blank" rel="noopener">ERC-8004</a>
+          <a href="https://eips.ethereum.org/EIPS/eip-8021" target="_blank" rel="noopener">ERC-8021</a>
+        </nav>
       </div>
     </footer>
-    <canvas id="particles" class="particles-canvas"></canvas>
-  </div>
+  </main>
 
-  <!-- ==================== APP SHELL ==================== -->
-  <div id="app" class="app" style="display:none">
-    <aside id="sidebar" class="sidebar">
-      <div class="sidebar__top">
-        <a href="/" class="sidebar__logo"><span class="nav__logo-mark">⚡</span> SPUR</a>
-        <div class="sidebar__agent">
-          <div class="sidebar__agent-avatar">⚡</div>
-          <div class="sidebar__agent-info">
-            <span class="sidebar__agent-name">ResearchBot</span>
-            <span class="sidebar__agent-id">ERC-8004 #817</span>
-          </div>
-        </div>
-      </div>
-      <nav class="sidebar__nav">
-        <a class="sidebar__link sidebar__link--active" data-page="overview">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-          OVERVIEW
-        </a>
-        <a class="sidebar__link" data-page="obligations">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/></svg>
-          OBLIGATIONS
-        </a>
-        <a class="sidebar__link" data-page="suppliers">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
-          SUPPLIERS
-        </a>
-        <a class="sidebar__link" data-page="financing">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/></svg>
-          FINANCING
-        </a>
-        <div class="sidebar__divider"></div>
-        <a class="sidebar__link" data-page="demo">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
-          DEMO LAB
-        </a>
-        <a class="sidebar__link" data-page="settings">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
-          SETTINGS
-        </a>
-      </nav>
-      <div class="sidebar__bottom"><div class="sidebar__network"><span class="sidebar__status-dot"></span> CELO MAINNET</div></div>
-    </aside>
-    <main id="main-content" class="main-content"><div id="page-content" class="page-content"></div></main>
-    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="/spur-core.js"></script>
-  <script src="/app.js"></script>
+  <script src="/dial.js"></script>
+  <script src="/landing.js"></script>
 </body>
 </html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPUR — Obligation Engine · App</title>
+  <meta name="description" content="SPUR is an obligation engine for autonomous agents on Celo. Forge bounded commitments, finance them, and settle only what is verified.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23FF4D2E' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FF4D2E'/%3E%3C/svg%3E">
+</head>
+<body>
+
+  <canvas id="grain" aria-hidden="true"></canvas>
+
+  <div id="app" class="app">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="side" id="side">
+      <div class="side__bar"></div>
+      <a class="side__brand" href="#" data-nav="overview">
+        <svg width="18" height="18" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="16" cy="16" r="13"/><circle cx="16" cy="16" r="5" fill="#FF4D2E" stroke="none"/></svg>
+        <span>SPUR</span>
+      </a>
+
+      <nav class="side__nav">
+        <button class="side__link is-on" data-nav="overview" aria-label="Overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span>Overview</span>
+        </button>
+        <button class="side__link" data-nav="obligations" aria-label="Obligations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h6M9 15h4"/></svg>
+          <span>Obligations</span>
+          <em class="side__count" id="count-obl">0</em>
+        </button>
+        <button class="side__link" data-nav="suppliers" aria-label="Suppliers">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.7 10.6 15.3 7.4M8.7 13.4l6.6 3.2"/></svg>
+          <span>Suppliers</span>
+        </button>
+        <button class="side__link" data-nav="financing" aria-label="Financing">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M15 14h2"/></svg>
+          <span>Financing</span>
+          <em class="side__count" id="count-fin">0</em>
+        </button>
+        <button class="side__link" data-nav="identity" aria-label="Identity">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M5 21c.5-3.5 3.4-5 7-5s6.5 1.5 7 5"/></svg>
+          <span>Identity</span>
+        </button>
+      </nav>
+
+      <div class="side__agent mono">
+        <div class="side__agent-row"><i class="dot dot--on"></i><span>Agent #9858</span></div>
+        <div class="side__agent-row side__agent-sub">CELO MAINNET · 42220</div>
+        <a class="side__landing mono" href="/">&larr; SPUR LANDING</a>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <div class="main">
+      <header class="top">
+        <button class="top__burger" id="burger" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        </button>
+        <div class="top__title">
+          <div class="mono top__crumb" id="crumb">WORKSPACE /</div>
+          <h1 class="top__heading" id="heading">Overview</h1>
+        </div>
+        <div class="top__right">
+          <button class="cmd mono" id="cmd-open" aria-label="Command palette">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span>Search</span>
+            <kbd>K</kbd>
+          </button>
+          <button class="btn btn--solid mono top__new" id="btn-new">New Obligation</button>
+          <div class="wallet mono" title="0x0D09d1dA79dBeCA81f4C05b5F89024c0d5c8Da12">0x0D09…c8Da12</div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section id="view-overview" class="view view--on"></section>
+        <section id="view-obligations" class="view"></section>
+        <section id="view-suppliers" class="view"></section>
+        <section id="view-financing" class="view"></section>
+        <section id="view-identity" class="view"></section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ===== OBLIGATION DRAWER ===== -->
+  <div class="scrim" id="drawer-scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <header class="drawer__head">
+      <button class="drawer__close" id="drawer-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+    <div id="drawer-body"></div>
+  </aside>
+
+  <!-- ===== CREATE MODAL ===== -->
+  <div class="scrim" id="modal-scrim"></div>
+  <div class="modalt" id="modal" aria-hidden="true">
+    <header class="modalt__head">
+      <div class="modalt__title-wrap">
+        <span class="mono modalt__step" id="modal-step">STEP 1 / 3</span>
+        <h2 class="modalt__title" id="modal-title">Basis</h2>
+      </div>
+      <button class="modalt__close" id="modal-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+    <div class="modalt__body" id="modal-body"></div>
+    <footer class="modalt__foot">
+      <button class="btn btn--ghost mono" id="modal-back">Back</button>
+      <button class="btn btn--solid mono" id="modal-next">Continue</button>
+    </footer>
+  </div>
+
+  <!-- ===== COMMAND PALETTE ===== -->
+  <div class="scrim" id="palette-scrim"></div>
+  <div class="palette" id="palette" aria-hidden="true">
+    <div class="palette__box">
+      <div class="palette__input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="palette-input" class="palette__input mono" placeholder="Search screens and actions…" autocomplete="off">
+        <kbd>ESC</kbd>
+      </div>
+      <div class="palette__list" id="palette-list"></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts"></div>
+
+  <script src="/data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="/dial.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
